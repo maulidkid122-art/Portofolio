@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak Profesional | Ananda Maulid</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Animasi Khusus Halaman Kontak */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px -12px rgba(79, 70, 229, 0.15);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            outline: none;
+            transition: 0.3s;
+            background: #f8fafc;
+            font-family: inherit;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #475569;
+            display: block;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+
+        /* Efek Hover di Kartu Sosial */
+        .s-card:hover .s-item {
+            background: #ffffff;
+            border: 1px solid var(--primary);
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body style="background: #f1f5f9; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden;">
+
+    <nav class="navbar">
+        <div class="logo">Ananda<span>Maulid</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Kembali ke Beranda</a></li>
+        </ul>
+    </nav>
+
+    <section class="contact-page" style="padding: 140px 8% 80px;">
+        <div class="section-header reveal" style="text-align: center; margin-bottom: 60px;">
+            <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 15px;">Mari <span class="gradient-text">Berkolaborasi</span></h1>
+            <p style="color: #64748b; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                Saya terbuka untuk diskusi mengenai inisiatif teknologi, manajemen organisasi, maupun kerja sama profesional lainnya.
+            </p>
+        </div>
+
+        <div class="contact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 50px; align-items: start;">
+            
+            <div class="contact-card reveal" style="background: white; padding: 40px; border-radius: 28px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+                <h3 style="margin-bottom: 30px; color: #1e293b; font-size: 1.4rem;">Formulir Komunikasi</h3>
+                
+                <form action="https://formspree.io/f/xjgepoda" method="POST">
+                    <input type="text" name="_gotcha" style="display:none !important" tabindex="-1">
+
+                    <div class="input-group">
+                        <label>Nama Lengkap</label>
+                        <input type="text" name="name" placeholder="Masukkan nama lengkap Anda" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Alamat Email</label>
+                        <input type="email" name="email" placeholder="contoh@email.com" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Pesan atau Keperluan</label>
+                        <textarea id="userMessage" name="message" rows="5" minlength="20" placeholder="Tuliskan detail maksud dan tujuan Anda di sini..." required style="resize: none;"></textarea>
+                        
+                        <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                            <span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">*Minimum 20 karakter</span>
+                            <div style="font-size: 0.75rem; color: #94a3b8; font-weight: 600;">
+                                <span id="charCount">0</span>/500
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="_subject" value="Pesan Profesional Baru dari Portofolio">
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 18px; font-weight: 700; cursor: pointer; border-radius: 14px; display: flex; justify-content: center; align-items: center; gap: 10px; background: #4f46e5; color: white; transition: 0.3s; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);">
+                        Kirim Pesan Sekarang <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="social-links reveal" style="display: flex; flex-direction: column; gap: 20px;">
+                <h3 style="margin-bottom: 10px; color: #1e293b; font-size: 1.4rem;">Informasi Kontak</h3>
+
+                <a href="https://wa.me/6289524394626" target="_blank" class="s-card" style="text-decoration: none; color: inherit;">
+                    <div class="s-item" style="background: white; padding: 25px; border-radius: 20px; transition: all 0.3s ease; display: flex; align-items: center; gap: 18px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03);">
+                        <div style="background: #25D36615; padding: 14px; border-radius: 14px; font-size: 1.6rem; color: #25D366;">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: #1e293b; font-size: 1.1rem;">WhatsApp</h4>
+                            <p style="margin: 0; font-size: 0.9rem; color: #64748b;">+62 895-2439-4626</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://www.linkedin.com/in/ananda-maulid/" target="_blank" class="s-card" style="text-decoration: none; color: inherit;">
+                    <div class="s-item" style="background: white; padding: 25px; border-radius: 20px; transition: all 0.3s ease; display: flex; align-items: center; gap: 18px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03);">
+                        <div style="background: #0077b515; padding: 14px; border-radius: 14px; font-size: 1.6rem; color: #0077b5;">
+                            <i class="fab fa-linkedin-in"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: #1e293b; font-size: 1.1rem;">LinkedIn</h4>
+                            <p style="margin: 0; font-size: 0.9rem; color: #64748b;">Ananda Maulid</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="mailto:anandamaulids@gmail.com" class="s-card" style="text-decoration: none; color: inherit;">
+                    <div class="s-item" style="background: white; padding: 25px; border-radius: 20px; transition: all 0.3s ease; display: flex; align-items: center; gap: 18px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03);">
+                        <div style="background: #4f46e515; padding: 14px; border-radius: 14px; font-size: 1.6rem; color: #4f46e5;">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: #1e293b; font-size: 1.1rem;">Email Bisnis</h4>
+                            <p style="margin: 0; font-size: 0.9rem; color: #64748b;">anandamaulids@gmail.com</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 60px; color: #94a3b8; font-size: 0.9rem; border-top: 1px solid #e2e8f0;">
+        <p>&copy; 2026 Ananda Maulid. Dikembangkan dengan dedikasi profesional.</p>
+    </footer>
+
+    <script>
+        // Animasi Reveal saat Load/Scroll
+        window.addEventListener('load', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('active');
+                }, index * 200); // Muncul bergantian
+            });
+        });
+
+        // Penghitung Karakter Real-time
+        const textarea = document.getElementById('userMessage');
+        const charCount = document.getElementById('charCount');
+
+        textarea.addEventListener('input', function() {
+            const length = this.value.length;
+            charCount.textContent = length;
+            
+            if (length < 20) {
+                charCount.style.color = '#f59e0b';
+            } else if (length > 450) {
+                charCount.style.color = '#ef4444';
+            } else {
+                charCount.style.color = '#4f46e5';
+            }
+        });
+
+        // Efek Fokus Input Berwarna
+        const inputs = document.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.style.borderColor = '#4f46e5';
+                input.style.background = '#ffffff';
+                input.style.boxShadow = '0 0 0 4px rgba(79, 70, 229, 0.1)';
+            });
+            input.addEventListener('blur', () => {
+                input.style.borderColor = '#e2e8f0';
+                input.style.background = '#f8fafc';
+                input.style.boxShadow = 'none';
+            });
+        });
+    </script>
+
+</body>
+</html>
