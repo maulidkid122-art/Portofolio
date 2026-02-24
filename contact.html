@@ -12,15 +12,31 @@
         .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s ease-out;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
         
+        /* Floating Animation untuk Kartu Sosial */
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .s-card {
+            text-decoration: none; 
+            color: inherit;
+        }
+
+        .s-card:nth-child(2) { animation: floatCard 5s ease-in-out infinite; }
+        .s-card:nth-child(3) { animation: floatCard 6s ease-in-out infinite; animation-delay: 0.5s; }
+        .s-card:nth-child(4) { animation: floatCard 5.5s ease-in-out infinite; animation-delay: 1s; }
+        .s-card:nth-child(5) { animation: floatCard 7s ease-in-out infinite; animation-delay: 0.2s; }
+
         .contact-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: 0 30px 60px -12px rgba(79, 70, 229, 0.15);
         }
 
@@ -35,7 +51,7 @@
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             outline: none;
-            transition: 0.3s;
+            transition: 0.4s;
             background: #f8fafc;
             font-family: inherit;
         }
@@ -50,10 +66,52 @@
         }
 
         /* Efek Hover di Kartu Sosial */
+        .s-item {
+            background: white; 
+            padding: 25px; 
+            border-radius: 20px; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            display: flex; 
+            align-items: center; 
+            gap: 18px; 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03);
+            border: 1px solid transparent;
+        }
+
         .s-card:hover .s-item {
             background: #ffffff;
-            border: 1px solid var(--primary);
-            transform: scale(1.03);
+            border-color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.1);
+        }
+
+        /* Gradient Instagram Icon */
+        .ig-icon {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Button Shine Effect */
+        .btn-submit {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-submit::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+            transition: 0.5s;
+            opacity: 0;
+        }
+        .btn-submit:hover::after {
+            left: 120%;
+            opacity: 1;
         }
     </style>
 </head>
@@ -76,7 +134,7 @@
 
         <div class="contact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 50px; align-items: start;">
             
-            <div class="contact-card reveal" style="background: white; padding: 40px; border-radius: 28px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+            <div class="contact-card reveal" style="background: white; padding: 40px; border-radius: 28px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05); transition: all 0.4s;">
                 <h3 style="margin-bottom: 30px; color: #1e293b; font-size: 1.4rem;">Formulir Komunikasi</h3>
                 
                 <form action="https://formspree.io/f/xjgepoda" method="POST">
@@ -106,7 +164,7 @@
 
                     <input type="hidden" name="_subject" value="Pesan Profesional Baru dari Portofolio">
 
-                    <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 18px; font-weight: 700; cursor: pointer; border-radius: 14px; display: flex; justify-content: center; align-items: center; gap: 10px; background: #4f46e5; color: white; transition: 0.3s; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);">
+                    <button type="submit" class="btn btn-primary btn-submit" style="width: 100%; border: none; padding: 18px; font-weight: 700; cursor: pointer; border-radius: 14px; display: flex; justify-content: center; align-items: center; gap: 10px; background: #4f46e5; color: white; transition: 0.3s; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);">
                         Kirim Pesan Sekarang <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
@@ -115,8 +173,20 @@
             <div class="social-links reveal" style="display: flex; flex-direction: column; gap: 20px;">
                 <h3 style="margin-bottom: 10px; color: #1e293b; font-size: 1.4rem;">Informasi Kontak</h3>
 
-                <a href="https://wa.me/6289524394626" target="_blank" class="s-card" style="text-decoration: none; color: inherit;">
-                    <div class="s-item" style="background: white; padding: 25px; border-radius: 20px; transition: all 0.3s ease; display: flex; align-items: center; gap: 18px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03);">
+                <a href="https://www.instagram.com/anmwld/" target="_blank" class="s-card">
+                    <div class="s-item">
+                        <div style="background: #f0943315; padding: 14px; border-radius: 14px; font-size: 1.6rem;">
+                            <i class="fab fa-instagram ig-icon"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: #1e293b; font-size: 1.1rem;">Instagram</h4>
+                            <p style="margin: 0; font-size: 0.9rem; color: #64748b;">@anmwld</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://wa.me/6289524394626" target="_blank" class="s-card">
+                    <div class="s-item">
                         <div style="background: #25D36615; padding: 14px; border-radius: 14px; font-size: 1.6rem; color: #25D366;">
                             <i class="fab fa-whatsapp"></i>
                         </div>
@@ -127,8 +197,8 @@
                     </div>
                 </a>
 
-                <a href="https://www.linkedin.com/in/ananda-maulid/" target="_blank" class="s-card" style="text-decoration: none; color: inherit;">
-                    <div class="s-item" style="background: white; padding: 25px; border-radius: 20px; transition: all 0.3s ease; display: flex; align-items: center; gap: 18px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03);">
+                <a href="https://www.linkedin.com/in/ananda-maulid/" target="_blank" class="s-card">
+                    <div class="s-item">
                         <div style="background: #0077b515; padding: 14px; border-radius: 14px; font-size: 1.6rem; color: #0077b5;">
                             <i class="fab fa-linkedin-in"></i>
                         </div>
@@ -139,8 +209,8 @@
                     </div>
                 </a>
 
-                <a href="mailto:anandamaulids@gmail.com" class="s-card" style="text-decoration: none; color: inherit;">
-                    <div class="s-item" style="background: white; padding: 25px; border-radius: 20px; transition: all 0.3s ease; display: flex; align-items: center; gap: 18px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03);">
+                <a href="mailto:anandamaulids@gmail.com" class="s-card">
+                    <div class="s-item">
                         <div style="background: #4f46e515; padding: 14px; border-radius: 14px; font-size: 1.6rem; color: #4f46e5;">
                             <i class="fas fa-envelope"></i>
                         </div>
@@ -154,45 +224,38 @@
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 60px; color: #94a3b8; font-size: 0.9rem; border-top: 1px solid #e2e8f0;">
-        <p>&copy; 2026 Ananda Maulid. Dikembangkan dengan dedikasi profesional.</p>
+    <footer style="text-align: center; padding: 60px; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0;">
+        <p>&copy; 2026 Ananda Maulid. Developed with Dedication.</p>
     </footer>
 
     <script>
-        // Animasi Reveal saat Load/Scroll
+        // Animasi Reveal saat Load
         window.addEventListener('load', () => {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach((el, index) => {
                 setTimeout(() => {
                     el.classList.add('active');
-                }, index * 200); // Muncul bergantian
+                }, index * 150);
             });
         });
 
-        // Penghitung Karakter Real-time
+        // Penghitung Karakter
         const textarea = document.getElementById('userMessage');
         const charCount = document.getElementById('charCount');
 
         textarea.addEventListener('input', function() {
             const length = this.value.length;
             charCount.textContent = length;
-            
-            if (length < 20) {
-                charCount.style.color = '#f59e0b';
-            } else if (length > 450) {
-                charCount.style.color = '#ef4444';
-            } else {
-                charCount.style.color = '#4f46e5';
-            }
+            charCount.style.color = length < 20 ? '#f59e0b' : (length > 450 ? '#ef4444' : '#4f46e5');
         });
 
-        // Efek Fokus Input Berwarna
+        // Efek Fokus Input
         const inputs = document.querySelectorAll('input, textarea');
         inputs.forEach(input => {
             input.addEventListener('focus', () => {
                 input.style.borderColor = '#4f46e5';
                 input.style.background = '#ffffff';
-                input.style.boxShadow = '0 0 0 4px rgba(79, 70, 229, 0.1)';
+                input.style.boxShadow = '0 10px 15px -5px rgba(79, 70, 229, 0.1)';
             });
             input.addEventListener('blur', () => {
                 input.style.borderColor = '#e2e8f0';
