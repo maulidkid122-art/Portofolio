@@ -1,6 +1,4 @@
-// ==========================================
-// 1. DATABASE PROJECT & MODAL LOGIC
-// ==========================================
+// DATABASE PROJECT (Isi konten detail buat Modal)
 const projectData = {
     "1": {
         title: "Digitalisasi Layanan Siswa",
@@ -34,6 +32,7 @@ const projectData = {
     }
 };
 
+// 1. LOGIKA MODAL POP-UP (FIXED & RESPONSIVE)
 const modal = document.getElementById("projectModal");
 const modalDetails = document.getElementById("modalDetails");
 const closeModal = document.querySelector(".close-modal");
@@ -42,6 +41,7 @@ document.querySelectorAll('.project-card').forEach(card => {
     card.addEventListener('click', () => {
         const id = card.getAttribute('data-project');
         const data = projectData[id];
+
         if (data) {
             modalDetails.innerHTML = `
                 <h2 style="color: #4f46e5; font-size: 1.8rem; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; font-weight: 800;">${data.title}</h2>
@@ -54,101 +54,110 @@ document.querySelectorAll('.project-card').forEach(card => {
                     <span style="color: #4f46e5; font-weight: 700; font-size: 1.05rem;">${data.tech}</span>
                 </div>
             `;
+            
+            // Tambahkan class active untuk memicu CSS Modal
             modal.classList.add('active');
-            document.body.style.overflow = "hidden";
+            document.body.style.overflow = "hidden"; // Kunci scroll layar utama
         }
     });
 });
 
+// Fungsi Tutup Modal
 const closeAction = () => {
     modal.classList.remove('active');
-    document.body.style.overflow = "auto";
+    document.body.style.overflow = "auto"; // Balikin scroll
 };
-if(closeModal) closeModal.onclick = closeAction;
-window.onclick = (e) => { if (e.target == modal) closeAction(); };
 
-// ==========================================
-// 2. MAGNETIC MOUSE FOLLOWER
-// ==========================================
-const cursor = document.createElement('div');
-cursor.className = 'cursor-dot';
-document.body.appendChild(cursor);
+if(closeModal) { closeModal.onclick = closeAction; }
+window.onclick = (event) => { if (event.target == modal) { closeAction(); } };
 
-Object.assign(cursor.style, {
-    width: '20px', height: '20px', backgroundColor: 'rgba(79, 70, 229, 0.3)',
-    borderRadius: '50%', position: 'fixed', pointerEvents: 'none',
-    zIndex: '9999', transition: 'transform 0.1s ease-out',
-    backdropFilter: 'blur(4px)', border: '1px solid rgba(79, 70, 229, 0.5)'
-});
-
-window.addEventListener('mousemove', (e) => {
-    cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
-});
-
-// ==========================================
-// 3. ANIMASI REVEAL & SMOOTH SCROLL
-// ==========================================
+// 2. SMOOTH SCROLL & ACTIVE LINK
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-links a');
 
-window.addEventListener('load', () => {
-    const reveals = document.querySelectorAll('.reveal, .project-card, .exp-item');
-    reveals.forEach((el, index) => {
-        setTimeout(() => {
-            el.classList.add('active');
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-            el.style.transition = `all 1s cubic-bezier(0.2, 1, 0.3, 1) ${index * 0.1}s`;
-        }, 100);
-    });
-});
-
-// ==========================================
-// 4. 3D TILT EFFECT (PROFILES & CARDS)
-// ==========================================
-const tiltElements = document.querySelectorAll('.image-wrapper, .project-card, .s-item, .contact-card');
-tiltElements.forEach(el => {
-    el.addEventListener('mousemove', (e) => {
-        if(window.innerWidth < 768) return;
-        const rect = el.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        el.style.transform = `perspective(1000px) rotateX(${y * -15}deg) rotateY(${x * 15}deg) scale(1.03)`;
-        if(el.classList.contains('image-wrapper')) el.style.animation = 'none';
-    });
-
-    el.addEventListener('mouseleave', () => {
-        el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
-        el.style.transition = 'all 0.5s ease';
-        if(el.classList.contains('image-wrapper')) {
-            el.style.transform = 'rotate(3deg)';
-            setTimeout(() => el.style.animation = 'float 6s ease-in-out infinite', 500);
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== "#") {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
         }
     });
 });
 
-// ==========================================
-// 5. NAVBAR & INTERACTIVE ELEMENTS
-// ==========================================
+// 3. NAVBAR GLASSMORPHISM
+const navbar = document.querySelector('.navbar');
 window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) {
-        navbar.style.padding = '15px 8%';
         navbar.style.background = 'rgba(255, 255, 255, 0.8)';
         navbar.style.backdropFilter = 'blur(10px)';
+        navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
+        navbar.style.padding = '15px 8%'; 
     } else {
-        navbar.style.padding = '20px 8%';
         navbar.style.background = 'white';
+        navbar.style.backdropFilter = 'none';
+        navbar.style.boxShadow = 'none';
+        navbar.style.padding = '20px 8%';
     }
+
+    let current = "";
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 120) {
+            current = section.getAttribute("id");
+        }
+    });
+    navLinks.forEach(a => {
+        const linkHref = a.getAttribute("href");
+        if (linkHref.includes(current) && current !== "") {
+            a.style.color = "#4f46e5";
+        } else {
+            a.style.color = "#0f172a";
+        }
+    });
 });
 
-// Karakter Counter & Form Logic (Khusus hal. kontak)
-const textarea = document.getElementById('userMessage');
-if(textarea) {
-    textarea.addEventListener('input', function() {
-        const charCount = document.getElementById('charCount');
-        charCount.textContent = this.value.length;
-        charCount.style.transform = 'scale(1.2)';
-        setTimeout(() => charCount.style.transform = 'scale(1)', 100);
+// 4. ANIMASI REVEAL
+const revealElements = document.querySelectorAll('.project-card, .exp-item, .section-header');
+const activeObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }, index * 50); 
+            activeObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.15 });
+
+revealElements.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(40px)';
+    el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+    activeObserver.observe(el);
+});
+
+// 5. FOTO PROFILE TILT (FIXED)
+const profileWrapper = document.querySelector('.image-wrapper');
+if (profileWrapper && window.innerWidth > 768) { // Tilt dimatikan di mobile biar gak aneh
+    profileWrapper.addEventListener('mousemove', (e) => {
+        profileWrapper.style.animation = 'none'; 
+        const { left, top, width, height } = profileWrapper.getBoundingClientRect();
+        const x = (e.clientX - left) / width - 0.5;
+        const y = (e.clientY - top) / height - 0.5;
+        profileWrapper.style.transform = `perspective(1000px) rotateX(${y * -20}deg) rotateY(${x * 20}deg) scale(1.05)`;
+    });
+
+    profileWrapper.addEventListener('mouseleave', () => {
+        profileWrapper.style.transition = 'all 0.5s ease';
+        profileWrapper.style.transform = `perspective(1000px) rotate(3deg) scale(1)`;
+        setTimeout(() => { profileWrapper.style.animation = 'float 6s ease-in-out infinite'; }, 500);
     });
 }
