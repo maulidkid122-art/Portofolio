@@ -1,4 +1,4 @@
-// DATABASE PROJECT (Isi konten detail buat Modal) - PENJELASAN MENDALAM & PROFESIONAL
+// DATABASE PROJECT (Isi konten detail buat Modal)
 const projectData = {
     "1": {
         title: "Digitalisasi Layanan Siswa",
@@ -32,7 +32,7 @@ const projectData = {
     }
 };
 
-// 1. LOGIKA MODAL POP-UP (FIXED: SCROLLABLE & RESPONSIVE)
+// 1. LOGIKA MODAL POP-UP (FIXED & RESPONSIVE)
 const modal = document.getElementById("projectModal");
 const modalDetails = document.getElementById("modalDetails");
 const closeModal = document.querySelector(".close-modal");
@@ -43,13 +43,6 @@ document.querySelectorAll('.project-card').forEach(card => {
         const data = projectData[id];
 
         if (data) {
-            const modalContent = document.querySelector('.modal-content');
-            if(modalContent) {
-                modalContent.style.maxHeight = '85vh';
-                modalContent.style.overflowY = 'auto';
-                modalContent.style.borderRadius = '20px';
-            }
-
             modalDetails.innerHTML = `
                 <h2 style="color: #4f46e5; font-size: 1.8rem; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; font-weight: 800;">${data.title}</h2>
                 <div style="margin: 20px 0;">
@@ -61,27 +54,24 @@ document.querySelectorAll('.project-card').forEach(card => {
                     <span style="color: #4f46e5; font-weight: 700; font-size: 1.05rem;">${data.tech}</span>
                 </div>
             `;
-            modal.style.display = "block";
-            document.body.style.overflow = "hidden";
+            
+            // Tambahkan class active untuk memicu CSS Modal
+            modal.classList.add('active');
+            document.body.style.overflow = "hidden"; // Kunci scroll layar utama
         }
     });
 });
 
-if(closeModal) {
-    closeModal.onclick = () => {
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-    };
-}
-
-window.onclick = (event) => {
-    if (event.target == modal) {
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-    }
+// Fungsi Tutup Modal
+const closeAction = () => {
+    modal.classList.remove('active');
+    document.body.style.overflow = "auto"; // Balikin scroll
 };
 
-// 2. SMOOTH SCROLL & ACTIVE LINK (REFINED)
+if(closeModal) { closeModal.onclick = closeAction; }
+window.onclick = (event) => { if (event.target == modal) { closeAction(); } };
+
+// 2. SMOOTH SCROLL & ACTIVE LINK
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-links a');
 
@@ -101,10 +91,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// 3. NAVBAR GLASSMORPHISM & ACTIVE STATE ON SCROLL
+// 3. NAVBAR GLASSMORPHISM
 const navbar = document.querySelector('.navbar');
 window.addEventListener('scroll', () => {
-    // Glass Effect
     if (window.scrollY > 50) {
         navbar.style.background = 'rgba(255, 255, 255, 0.8)';
         navbar.style.backdropFilter = 'blur(10px)';
@@ -117,7 +106,6 @@ window.addEventListener('scroll', () => {
         navbar.style.padding = '20px 8%';
     }
 
-    // Highlighting Nav Links
     let current = "";
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
@@ -126,18 +114,20 @@ window.addEventListener('scroll', () => {
         }
     });
     navLinks.forEach(a => {
-        a.style.color = a.getAttribute("href").includes(current) ? "#4f46e5" : "#0f172a";
+        const linkHref = a.getAttribute("href");
+        if (linkHref.includes(current) && current !== "") {
+            a.style.color = "#4f46e5";
+        } else {
+            a.style.color = "#0f172a";
+        }
     });
 });
 
-// 4. ANIMASI REVEAL SAAT SCROLL (STAGGERED ADDED)
+// 4. ANIMASI REVEAL
 const revealElements = document.querySelectorAll('.project-card, .exp-item, .section-header');
-const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
-
 const activeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-            // Ditambahkan delay sedikit agar muncul bergantian (Staggered)
             setTimeout(() => {
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
@@ -145,7 +135,7 @@ const activeObserver = new IntersectionObserver((entries) => {
             activeObserver.unobserve(entry.target);
         }
     });
-}, observerOptions);
+}, { threshold: 0.15 });
 
 revealElements.forEach(el => {
     el.style.opacity = '0';
@@ -154,41 +144,20 @@ revealElements.forEach(el => {
     activeObserver.observe(el);
 });
 
-// 5. HOVER EFFECT PROJECT CARDS
-document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        card.style.transform = 'translateY(-10px) scale(1.02)';
-    });
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'translateY(0) scale(1)';
-    });
-});
-
-// 6. FOTO PROFILE 3D TILT EFFECT (FIXED ANIMATION CONFLICT)
+// 5. FOTO PROFILE TILT (FIXED)
 const profileWrapper = document.querySelector('.image-wrapper');
-if (profileWrapper) {
+if (profileWrapper && window.innerWidth > 768) { // Tilt dimatikan di mobile biar gak aneh
     profileWrapper.addEventListener('mousemove', (e) => {
-        // Matikan floating CSS sementara agar tidak bergetar saat tilt
         profileWrapper.style.animation = 'none'; 
-        
         const { left, top, width, height } = profileWrapper.getBoundingClientRect();
         const x = (e.clientX - left) / width - 0.5;
         const y = (e.clientY - top) / height - 0.5;
-
-        profileWrapper.style.transform = `
-            perspective(1000px) 
-            rotateX(${y * -20}deg) 
-            rotateY(${x * 20}deg) 
-            scale(1.05)
-        `;
+        profileWrapper.style.transform = `perspective(1000px) rotateX(${y * -20}deg) rotateY(${x * 20}deg) scale(1.05)`;
     });
 
     profileWrapper.addEventListener('mouseleave', () => {
-        profileWrapper.style.transform = `perspective(1000px) rotate(3deg) scale(1)`;
         profileWrapper.style.transition = 'all 0.5s ease';
-        // Jalankan lagi floating animation setelah kursor keluar
-        setTimeout(() => {
-            profileWrapper.style.animation = 'float 6s ease-in-out infinite';
-        }, 50);
+        profileWrapper.style.transform = `perspective(1000px) rotate(3deg) scale(1)`;
+        setTimeout(() => { profileWrapper.style.animation = 'float 6s ease-in-out infinite'; }, 500);
     });
 }
